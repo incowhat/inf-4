@@ -1,2 +1,5 @@
-print('toto je test git repa v inom git repe')
-print('test editovania school repa v main repe')
+print(100)
+print(100 << 2)
+print(100 >> 1)
+print(2 << 100)
+print(2 >> 100)

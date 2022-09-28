@@ -5,14 +5,14 @@ total = int(input('pocet pismen: '))
 
 canvas = tkinter.Canvas(width=400, height = 400)
 canvas.pack(fill="both", expand=True)
-width, height = 0, 0
+width, height = canvas.winfo_width(), canvas.winfo_height()
 
 while True:
     if width != canvas.winfo_width() or height != canvas.winfo_height():
         width, height = canvas.winfo_width(), canvas.winfo_height()
         canvas.delete("all")
 
-        for i in range(total):
+        for _ in range(total):
             x, y = randint(0, width), randint(0, height)
             # print(x, y)
             if x < width/2:
@@ -20,7 +20,7 @@ while True:
             else:
                 text, color = ('C', '#00ff22') if (y < height/2) else ('D', '#ffcc00')
             # print(text, color)
-            canvas.create_text(x, y, text=text, fill=color)
+            canvas.create_text(x, y, text=text, fill=color, font=f'Comic {((width*height)>>14)+10}')
             canvas.update()
 
     canvas.update()
