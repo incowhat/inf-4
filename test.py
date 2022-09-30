@@ -1,5 +1,1 @@
-print(100)
-print(100 << 2)
-print(100 >> 1)
-print(2 << 100)
-print(2 >> 100)
+print('test')
