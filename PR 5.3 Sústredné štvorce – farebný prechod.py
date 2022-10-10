@@ -1,5 +1,4 @@
 import tkinter
-from random import randint
 
 a = int(input('zadaj cislo strany: '))
 rgb = [0, 0, 255]
