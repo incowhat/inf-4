@@ -21,14 +21,8 @@ for i in range(1, (a>>1)+1):
             elif rgb[n-2] == 255:
                 rgb[n] -= 1
                 
-                
-
-
-
     print(color())
     canvas.update()
     canvas.after(10)
-
-
 
 tkinter.mainloop()
