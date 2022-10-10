@@ -11,15 +11,15 @@ canvas.pack(fill="both")
 for i in range(1, (a>>1)+1):
     canvas.create_rectangle(i, i, a, a, outline=color())
     a -= 1
-    
-    for n in range(3):
-        if rgb[n] == 255:
-            if rgb[n-2] < 255:
-                rgb[n-2] += 1
-            if rgb[n-1] != 0:
-                rgb[n-1] -= 1
-            elif rgb[n-2] == 255:
-                rgb[n] -= 1
+    for j in range(3):
+        for n in range(3):
+            if rgb[n] == 255:
+                if rgb[n-2] < 255:
+                    rgb[n-2] += 1
+                if rgb[n-1] != 0:
+                    rgb[n-1] -= 1
+                elif rgb[n-2] == 255:
+                    rgb[n] -= 1
                 
     print(color())
     canvas.update()
