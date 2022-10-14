@@ -1,0 +1,1 @@
+print(''+[cislo%sustava for cislo, sustava ((while cislo != 0: pass ) for cislo, sustava in [int(input('zadaj cislo: ')), int(input('zadaj sustavu: '))])])])
