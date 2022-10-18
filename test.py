@@ -1,5 +1,4 @@
+((c, orig),), r = [[(i, i) for i in (int(13),)], 
+                                              int(2)]
 
-print((20//2))
-print(((20//2)//2))
-print((((20//2)//2)//2))
-print(((((20//2)//2)//2)//2))
+print(c, orig, r)

@@ -1,1 +1,1 @@
-print(''+[cislo%sustava for cislo, sustava ((while cislo != 0: pass ) for cislo, sustava in [int(input('zadaj cislo: ')), int(input('zadaj sustavu: '))])])])
+[[cislo := [], [(prevod := lambda c, r: [cislo.append(c%r), (prevod(c//r, r) if c//r != 0 else cislo.append((orig, r)))])(c, r) for [((c, orig),), r] in [[[(i, i) for i in (int(input('cislo v desiatkovej sustave: ')),)], int(input('radix v desiatkovej sustave: '))]]]], print(f'cislo {cislo[-1][0]} v {cislo[-1][1]}-kovej sustave je ', cislo[:-1])]
