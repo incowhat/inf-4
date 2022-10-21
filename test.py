@@ -1,1 +1,2 @@
-print(chr(857))
+print(a:=5)
+print(type(a))
