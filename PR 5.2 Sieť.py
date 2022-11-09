@@ -1,4 +1,4 @@
-import tkinter, color
+import tkinter
 
 a = int(input('zadaj cislo strany: '))
 apol = a>>1
