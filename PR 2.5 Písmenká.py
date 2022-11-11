@@ -14,12 +14,12 @@ while True:
 
         for _ in range(total):
             x, y = randint(0, width), randint(0, height)
-            # print(x, y)
+            
             if x < width/2:
                 text, color = ('A', '#ff2200') if (y < height/2) else ('B', '#0022ff')
             else:
                 text, color = ('C', '#00ff22') if (y < height/2) else ('D', '#ffcc00')
-            # print(text, color)
+
             canvas.create_text(x, y, text=text, fill=color, font=f'Comic {((width*height)>>14)+10}')
             canvas.update()
 
