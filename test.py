@@ -1,1 +1,4 @@
-print(len([[1, 1], [1, 1], [1, 1], [1, 1]]))
+def test():
+    pass
+
+print(test.__name__)

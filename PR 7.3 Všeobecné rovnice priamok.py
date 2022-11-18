@@ -7,7 +7,6 @@ width, height = canvas.winfo_width(), canvas.winfo_height()
 points = list()
 
 def priamka(event):
-    global points
     if len(points)>4:
         return
 
@@ -23,15 +22,18 @@ def priamka(event):
 canvas.bind('<1>', priamka)
 
 while True:
-    if width != canvas.winfo_width() or height != canvas.winfo_height():
-        width, height = canvas.winfo_width(), canvas.winfo_height()
-        canvas.delete('legenda')
-        points.clear()
+    try:
+        if width != canvas.winfo_width() or height != canvas.winfo_height():
+            width, height = canvas.winfo_width(), canvas.winfo_height()
+            canvas.delete('legenda')
+            points.clear()
 
-        size = ((width*height)>>15)+5
-        canvas.create_text(width/2, height-height//4, text='priesecnik - stlac <p>', font=f'Consolas {size}', tags='legenda')
-        canvas.create_text(width/2, height+size*2-height//4, text='vycistenie plochy - stlac <Delete>', font=f'Consolas {size}', tags='legenda')
+            size = ((width*height)>>15)+5
+            canvas.create_text(width/2, height-height//4, text='priesecnik - stlac <p>', font=f'Consolas {size}', tags='legenda')
+            canvas.create_text(width/2, height+size*2-height//4, text='vycistenie plochy - stlac <Delete>', font=f'Consolas {size}', tags='legenda')
+
+            canvas.update()
 
         canvas.update()
-
-    canvas.update()
+    
+    except: exit() if tkinter.TclError else None
