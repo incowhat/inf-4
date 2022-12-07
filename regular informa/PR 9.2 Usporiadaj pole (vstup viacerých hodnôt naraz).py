@@ -1,28 +1,45 @@
-import tkinter, asyncio
-from random import shuffle, randint
+import tkinter
+from random import shuffle
 
-pocet = 300
+pocet = 100
+size = 2
+ratio = 2
 cisla = list(range(1, pocet+1))
 shuffle(cisla)
-cisla2=list(cisla)
 
-selection = tkinter.Canvas(width=pocet, height=pocet, bg='black')
-selection.grid(column=0, row=0)
-selection.update()
+canvas = tkinter.Canvas(width=pocet*size, height=pocet*size/ratio, bg='black')
+canvas.pack()
+canvas.update()
+width = canvas.winfo_height()
 
-half = tkinter.Canvas(width=pocet, height=pocet, bg='black')
-half.grid(column=1, row=0)
-half.update()
+def color(step=1, rgb=[255, 0, 0]):
+    def generator():
+        while True:
+            for _ in range(step):
+                for n in range(3):
+                    if rgb[n] == 255:
+                        if rgb[n-1] != 0:
+                            rgb[n-1] -= 1
+                        elif rgb[n-2] < 255:
+                            rgb[n-2] += 1
+                        else:
+                            rgb[n] -= 1
+                
+            yield f"#{rgb[0]:02x}{rgb[1]:02x}{rgb[2]:02x}"
+    
+    return [next(generator()) for _ in range(pocet)]
 
+farby = color(pocet//200)
 
-def vykreslenie(canvas, pole):
+def vykreslenie(pole):
     canvas.delete('all')
-    for i, c in enumerate(pole):
-        canvas.create_line(i, pocet, i, pocet-c, fill='white')
+    for i, y in enumerate(pole):
+        canvas.create_line(i*size+size, width, i*size+size, width-y*size/ratio, width=size, fill=farby[y-1])
+
     canvas.update()
 
-def posun(canvas, x, y, fill='red'):
-    canvas.create_line(x, pocet, x, pocet-y, fill=fill)
+def posun(x, y, fill='white'):
+    canvas.create_line(x*size+size, width, x*size+size, width-y*size/ratio, width=size, fill=fill)
     canvas.update()
 
 def minimum(pole):
@@ -47,63 +64,19 @@ def priemer(pole):
         dlzka += 1
 
     return sucet/dlzka
-    
 
-
-
-async def selectionSort(pole):
-    for i in range(pocet):
+def selectionSort(pole):
+    for i in range(pocet-1):
         zmenCislo = minimum(pole[i:])
         cisloIndx = pole.index(zmenCislo)
-        posun(selection, cisloIndx, zmenCislo)
-        posun(selection, zmenCislo, zmenCislo, fill='green')
+        posun(cisloIndx, zmenCislo)
+        posun(zmenCislo, zmenCislo)
         pole.insert(i, pole.pop(cisloIndx))
 
-        vykreslenie(selection, pole)
-        await asyncio.sleep(0) 
-
-async def mojTestSort(docasny, hlavny=[]):
-    if not hlavny:
-        hlavny = list(docasny)
-    if len(docasny) == 1:
-        return
-
-    docasny2 = tuple(docasny)
-    rozpatie = priemer(docasny2)
-
-    for i in docasny2:
-        cisloIndxDocasny = docasny.index(i)
-        cisloIndxHlavny = hlavny.index(i)
-
-        if i <= rozpatie:
-            posun(half, cisloIndxHlavny, i)
-            posun(half, i, i, fill='green')
-            
-            docasny.insert(0, docasny.pop(cisloIndxDocasny))
-            hlavny.insert(minimum(docasny)-1, hlavny.pop(cisloIndxHlavny))
-        else:
-            posun(half, cisloIndxHlavny, i)
-            posun(half, i, i, fill='green')
-            
-            if (mD := maximum(docasny)) < pocet:
-                docasny.insert(mD-1, docasny.pop(cisloIndxDocasny))
-                hlavny.insert(mD-1, hlavny.pop(cisloIndxHlavny))
-            else:
-                docasny.append(docasny.pop(cisloIndxDocasny))
-                hlavny.append(hlavny.pop(cisloIndxHlavny))
-
-        vykreslenie(half, hlavny)
-        await asyncio.sleep(0)
-
-    if (dlzka := len(docasny)) > 2:
-        dlzka = int((dlzka+1)/2)
-        await mojTestSort(docasny[:dlzka], hlavny)
-        await mojTestSort(docasny[dlzka:], hlavny)
+        vykreslenie(pole)
 
 
 
-async def call_tests():
-    await asyncio.gather(selectionSort(cisla), mojTestSort(cisla2))
-asyncio.run(call_tests())
+selectionSort(cisla)
 
 tkinter.mainloop()
