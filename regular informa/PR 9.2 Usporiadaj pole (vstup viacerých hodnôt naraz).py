@@ -1,8 +1,8 @@
 import tkinter
 from random import shuffle
 
-pocet = 100
-size = 2
+pocet = 300
+size = 4
 ratio = 2
 cisla = list(range(1, pocet+1))
 shuffle(cisla)
@@ -29,7 +29,7 @@ def color(step=1, rgb=[255, 0, 0]):
     
     return [next(generator()) for _ in range(pocet)]
 
-farby = color(pocet//200)
+farby = color(1200//pocet)
 
 def vykreslenie(pole):
     canvas.delete('all')
