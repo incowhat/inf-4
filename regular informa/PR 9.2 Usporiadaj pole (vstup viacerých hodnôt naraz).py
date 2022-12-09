@@ -1,7 +1,7 @@
 import tkinter
 from random import shuffle
 
-pocet = 300
+pocet = 340
 size = 4
 ratio = 2
 cisla = list(range(1, pocet+1))
@@ -10,7 +10,7 @@ shuffle(cisla)
 canvas = tkinter.Canvas(width=pocet*size, height=pocet*size/ratio, bg='black')
 canvas.pack()
 canvas.update()
-width = canvas.winfo_height()
+height = canvas.winfo_height()
 
 def color(step=1, rgb=[255, 0, 0]):
     def generator():
@@ -29,17 +29,17 @@ def color(step=1, rgb=[255, 0, 0]):
     
     return [next(generator()) for _ in range(pocet)]
 
-farby = color(1200//pocet)
+farby = tuple(color(1200//pocet))
 
 def vykreslenie(pole):
     canvas.delete('all')
     for i, y in enumerate(pole):
-        canvas.create_line(i*size+size, width, i*size+size, width-y*size/ratio, width=size, fill=farby[y-1])
+        canvas.create_line(i*size+size, height, i*size+size, height-y*size/ratio, width=size, fill=farby[y-1])
 
     canvas.update()
 
 def posun(x, y, fill='white'):
-    canvas.create_line(x*size+size, width, x*size+size, width-y*size/ratio, width=size, fill=fill)
+    canvas.create_line(x*size-size, height, x*size-size, height-y*size/ratio, width=size, fill=fill)
     canvas.update()
 
 def minimum(pole):
