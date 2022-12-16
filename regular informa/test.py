@@ -1,1 +1,1 @@
-import this
+print(ord('a')-87)
