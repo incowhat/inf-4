@@ -1,1 +1,3 @@
-print(ord('a')-87)
+qq = ['a', 1, True, 3.14]
+
+print(*qq, sep='#')

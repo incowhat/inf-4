@@ -1,9 +1,9 @@
 import tkinter, asyncio
 
-size = 300
+size = 200
 c1, c2, c3 = [tkinter.Canvas(width=size, height=size) for _ in range(3)]
 c1.grid(row=0, column=0); c2.grid(row=0, column=1); c3.grid(row=0, column=2)
-# canvasy
+# 3 canvasy
 
 def farba(hodnota):
     return f'{int(hodnota/size*255):02x}'
