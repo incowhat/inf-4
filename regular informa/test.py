@@ -27,7 +27,7 @@ if __name__ == '__main__':
     generators = (colorbyHue, colorbyRGB)
     
     qqq = 1
-    for color in generators[0](5):
+    for color in generators[1](1):
         print(qqq, color)
         if color == '#ff0001':
             exit()
