@@ -1,0 +1,12 @@
+kolko = int(input())
+
+def plocha(list):
+    print(f'   {list[0]}   ')
+    print(f'  {list[1]} {list[2]}   ')
+    print(f' {list[3]} {list[4]} {list[5]} ')
+    print(f'{list[6]} {list[7]} {list[8]} {list[9]}')
+
+qq = ['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']
+
+for i, e in enumerate(qq):
+    plocha(list(qq[:i], 'X', list[i+1:]))

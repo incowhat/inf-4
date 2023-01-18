@@ -1,1 +1,3 @@
-print(3//2)
+from math import perm
+
+print(perm(5, 2))
