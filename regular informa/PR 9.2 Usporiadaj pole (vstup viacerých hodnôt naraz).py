@@ -1,8 +1,8 @@
 import tkinter
 from random import shuffle
 
-pocet = 340
-size = 4
+pocet = 400
+size = 2
 ratio = 2
 cisla = list(range(1, pocet+1))
 shuffle(cisla)
@@ -74,7 +74,6 @@ def selectionSort(pole):
         pole.insert(i, pole.pop(cisloIndx))
 
         vykreslenie(pole)
-
 
 
 selectionSort(cisla)

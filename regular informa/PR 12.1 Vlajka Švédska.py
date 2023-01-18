@@ -5,11 +5,11 @@ r = 5
 
 canvas = tkinter.Canvas(width=400, height=250)
 canvas.pack(fill='both', expand=True)
-width, height = int(), int()
+canvas.update()
+width, height = canvas.winfo_width(), canvas.winfo_height()
 
 while True:
     if width != canvas.winfo_width() or height != canvas.winfo_height():
-        canvas.update()
         width, height = canvas.winfo_width(), canvas.winfo_height()
         canvas.delete('all')
     
