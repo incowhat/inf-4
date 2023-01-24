@@ -65,7 +65,7 @@ def priemer(pole):
 
     return sucet/dlzka
 
-def selectionSort(pole):
+def notreallyselectionSort(pole):
     for i in range(pocet-1):
         zmenCislo = minimum(pole[i:])
         cisloIndx = pole.index(zmenCislo)
@@ -76,6 +76,6 @@ def selectionSort(pole):
         vykreslenie(pole)
 
 
-selectionSort(cisla)
+notreallyselectionSort(cisla)
 
 tkinter.mainloop()
