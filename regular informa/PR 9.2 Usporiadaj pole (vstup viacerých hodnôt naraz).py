@@ -1,8 +1,8 @@
 import tkinter
 from random import shuffle
 
-pocet = 400
-size = 2
+pocet = 300
+size = 4
 ratio = 2
 cisla = list(range(1, pocet+1))
 shuffle(cisla)
