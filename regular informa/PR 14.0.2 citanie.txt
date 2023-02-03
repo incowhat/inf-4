@@ -1,4 +1,4 @@
-toto je napisane v predoslom subore "zapis"
+toto je napisane v predoslom subore "zapis":
 
 test
 test
