@@ -1,1 +1,1 @@
-print((tuple([1, 'cuberyvb'])))
+eval('print(1+3)')
