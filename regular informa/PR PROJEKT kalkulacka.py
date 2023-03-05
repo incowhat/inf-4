@@ -1,46 +1,40 @@
 import tkinter
 
 class Button:
-    instances = []
+    instances: list = []
 
     def __init__(self, text: str, column: int, row: int, func=None, key=None):
         self.func = func
         self.text = text
-        self.key = key if key else text
-
-        self.button = tkinter.Button(text=text, command=self.command, justify='center')
-        self.button.configure(fg='#303030', bg='#f0f0f0', relief='groove', activebackground='darkgrey')
+        self.button = tkinter.Button(text=text, command=self.command, borderwidth=1,
+                                     justify='center', fg='#e0e0e0', bg='#111111', relief='ridge',
+                                     activebackground='#555555', activeforeground='#ffffff')
         self.button.grid(column=column, row=row, sticky="WENS")
-        
-        self.button.bind_all(f'<KeyPress-{self.key}>', self.invoke)
+        self.button.bind_all(f'<KeyPress-{key if key else text}>', lambda e: self.button.invoke())
         self.button.bind('<Enter>', self.hover)
         self.button.bind('<Leave>', self.hover)
 
         Button.instances.append(self)
-        
-    def invoke(self, event):
-        self.button.invoke()
 
     def hover(self, event):
         if str(event)[1:6] == 'Enter':
-            self.button.configure(fg='black', bg='lightgrey')
+            self.button.configure(fg='#ffffff', bg='#2f2f2f')
         else:
-            self.button.configure(fg='#303030', bg='#f0f0f0')
-
-    def size(self):
-        window.grid_columnconfigure('all', weight=1)
-        window.grid_rowconfigure('all', weight=1)
-        txtSize = 12 + (window.winfo_width()+window.winfo_height())//90
-        self.button.configure(font=('Calibri', txtSize))
-        entry.configure(font=('Calibri', txtSize))
-        entryPast.configure(font=('Calibri', txtSize))
-
-    @staticmethod
-    def sizeAll(event):
-        for instance in Button.instances:
-            instance.size()
+            self.button.configure(fg='#e0e0e0', bg='#111111')
 
     def command(self):
+        global newEq
+        if newEq:
+            entryPast.configure(state='normal')
+            entryPast.delete(0, 'end')
+            if newEq != 'error':
+                entryPast.insert(0, entry.get())
+            entryPast.configure(state='readonly')
+            
+            if self.text in '0123456789()Ans' or newEq == 'error':
+                clear()
+        newEq = False
+        
         if self.func:
             self.func()
         else:
@@ -49,70 +43,174 @@ class Button:
             entry.configure(state='readonly')
 
 def entryEdit(func):
-    def wrapper():
+    def wrapper(*args):
         entryPast.configure(state='normal')
         entry.configure(state='normal')
-        func()
+        func(*args)
         entry.configure(state='readonly')
         entryPast.configure(state='readonly')
     return wrapper
 
-    
-
 @entryEdit
 def equal():
-    expression = entry.get()
+    global ans, newEq
+    newEq = True
 
+    expression = entry.get()
+    expression = expression.replace('Ans', str(ans))
     entryPast.delete(0, 'end')
     entryPast.insert(0, expression)
     entry.delete(0, 'end')
 
-    expression = expression.replace('^', ' | Infix(lambda a, b: pow(a, b)) | ')
-    print(expression)
+    expression = expression.replace('**', 'uzSomDalDoKodu^tak**tamNebudu')
+    expression = expression.replace('^', '**')
 
-    entry.insert(0, eval(expression))
+    expression = root(expression)        
+
+    try:
+        c = eval(expression)
+
+        if isinstance(c, float) and c.is_integer():
+            c = int(c)
+        ans = c
+
+        if not isinstance(c, int | float):
+            return clear()
+    except Exception as error:
+        c = type(error).__name__
+        clear()
+        entry.configure(state='normal') # clear to zmeni na readonly tak vratime spat na normal
+        newEq = 'error'
+        
+    entry.insert(0, str(c))
+
+# BLACKMAGIC NESNAZIT SA POCHOPIT!!!!
+def root(strToRoot):
+    if '√' not in strToRoot:
+        return strToRoot
+
+    for i, item in enumerate(strToRoot[::-1]):
+        if item != '√': continue
+        i = len(strToRoot) - i-1
+
+        for j, left in enumerate(strToRoot[i if i==0 else i-1::-1]): # ide od odmocniny dolava
+            if j == 0 and left == ')':
+                memory = root(strToRoot[:i])
+                strToRoot = [q for q in strToRoot]
+                del strToRoot[:i]
+                strToRoot.insert(0, eval(memory))
+                strToRoot = ''.join(map(str, strToRoot))
+                return root(strToRoot)
+                    
+            if left in '+-//**%()√':
+                a = strToRoot[i-j:i]
+                lt = i-j
+                break
+        else:
+            a = strToRoot[:i]
+            lt = 0
+        if a == '':
+            a = 2
+            
+        for j, right in enumerate(strToRoot[i+1:], 1):
+            if j == 1 and right == '(':
+                memory = root(strToRoot[i+1:])
+                strToRoot = [q for q in strToRoot]
+                del strToRoot[i+1:]
+                strToRoot.append(eval(memory))
+                strToRoot = ''.join(map(str, strToRoot))
+                return root(strToRoot)
+
+            if right in '+-//**%()√':
+                b = strToRoot[i+1:i+j]
+                rt = i+j
+                break
+        else:
+            b = strToRoot[i+1:]
+            rt = None
+
+        try:
+            oneRoot = pow(float(b), 1/float(a))
+            strToRoot = [i for i in strToRoot]
+            del strToRoot[lt:rt]
+            strToRoot.insert(lt, str(oneRoot))
+            strToRoot = ''.join(strToRoot)
+        except Exception:
+            strToRoot = '++' # syntax error ked to hodi do eval
+        break
+    return root(strToRoot)
+
 
 @entryEdit
 def delete():
-    entry.delete(entry.index('end') - 1)
+    if entry.get()[-3:] == 'Ans':
+        last = entry.index('end') - 3
+    else:
+        last = entry.index('end') - 1
+    entry.delete(last, 'end')
 
 @entryEdit
-def clear():
-    entry.delete(0, 'end')
+def clear(event=None):
+    if event: return
+    if entry.get() == '':
+        entryPast.delete(0, 'end')    
+    entry.delete(0, 'end')    
 
+def resize(event):
+    window.grid_columnconfigure('all', weight=1)
+    window.grid_rowconfigure('all', weight=1)
+    txtSize = 12 + (window.winfo_width()+window.winfo_height())//90
+
+    for instance in Button.instances:
+        if instance in (bAns, bDelete):
+            instance.button.configure(font=('Consolas', int(txtSize * 0.6), 'bold'))
+        else:
+            instance.button.configure(font=('Consolas', txtSize))
+
+    entry.configure(font=('Consolas', txtSize))
+    entryPast.configure(font=('Consolas', txtSize))
 
 
 
 window = tkinter.Tk()
 window.title('Kalkulacka')
-window.bind('<Configure>', Button.sizeAll)
+window.configure(bg='#111111')
+window.bind('<Configure>', resize)
 
-entryPast = tkinter.Entry(font='10', justify='right', state='readonly')
-entryPast.configure(fg='grey', relief='flat')
+entryPast = tkinter.Entry(justify='right', state='readonly')
+entryPast.configure(fg='grey', bg='green', relief='flat')
 entryPast.grid(column=0, row=0, columnspan=4, sticky='WENS')
-entry = tkinter.Entry(font='10', justify='right', state='readonly')
+
+entry = tkinter.Entry(justify='right', state='readonly', fg='#111111', bg='green')
 entry.grid(column=0, row=1, columnspan=4, sticky='WENS')
+entry.bind_all('<Control-c>', clear) # ken nahodou niekto kopiruje aby sa nezmzal vysledok
 
+ans = 'esteNieJe'
+newEq = False
 
-b9 = Button('9', 2, 3)
-b8 = Button('8', 1, 3)
-b7 = Button('7', 0, 3)
-b6 = Button('6', 2, 4)
-b5 = Button('5', 1, 4)
-b4 = Button('4', 0, 4)
-b3 = Button('3', 2, 5)
-b2 = Button('2', 1, 5)
-b1 = Button('1', 0, 5)
-b0 = Button('0', 0, 6)
-bPoint = Button('.', 1, 6)
-bEqual = Button('=', 3, 6, func=equal)
-bPlus = Button('+', 3, 3)
-bMinus = Button('-', 3, 4, key='minus')
-bMultiply = Button('*', 2, 2)
-bDivide = Button('/', 3, 2)
-bPow = Button('^', 0, 2, key='p')
-bSqrt = Button('√', 1, 2, key='s')
-bClear = Button('C', 3, 5, key='c', func=clear)
-bDelete = Button('<', 2, 6, key='BackSpace', func=delete)
+b9 = Button('9', 2, 4)
+b8 = Button('8', 1, 4)
+b7 = Button('7', 0, 4)
+b6 = Button('6', 2, 5)
+b5 = Button('5', 1, 5)
+b4 = Button('4', 0, 5)
+b3 = Button('3', 2, 6)
+b2 = Button('2', 1, 6)
+b1 = Button('1', 0, 6)
+b0 = Button('0', 0, 7)
+bPoint = Button('.', 1, 7)
+bEqual = Button('=', 3, 7, func=equal)
+bPlus = Button('+', 3, 6)
+bMinus = Button('-', 3, 5, key='minus')
+bMultiply = Button('*', 3, 4)
+bDivide = Button('/', 3, 3)
+bPow = Button('^', 0, 3, key='p')
+bSqrt = Button('√', 1, 3, key='s')
+bClear = Button('C', 2, 2, key='c', func=clear)
+bDelete = Button('⌫', 3, 2, key='BackSpace', func=delete)
+bAns = Button('Ans', 2, 7, key='a')
+bBracketL = Button('(', 0, 2)
+bBracketR = Button(')', 1, 2)
+bBracketR = Button('%', 2, 3)
 
 tkinter.mainloop()

@@ -1,1 +1,1 @@
-eval('print(1+3)')
+print(''.join([i for i in 'abcdef']))
