@@ -1,5 +1,15 @@
 import tkinter
 
+def entryEdit(func):
+    def wrapper(*args):
+        entryPast.configure(state='normal')
+        entry.configure(state='normal')
+        func(*args)
+        entry.configure(state='readonly')
+        entryPast.configure(state='readonly')
+    return wrapper
+
+
 class Button:
     instances: list = []
 
@@ -22,14 +32,13 @@ class Button:
         else:
             self.button.configure(fg='#e0e0e0', bg='#111111')
 
+    @entryEdit
     def command(self):
         global newEq
         if newEq:
-            entryPast.configure(state='normal')
             entryPast.delete(0, 'end')
             if newEq != 'error':
                 entryPast.insert(0, entry.get())
-            entryPast.configure(state='readonly')
             
             if self.text in '0123456789()Ans' or newEq == 'error':
                 clear()
@@ -38,41 +47,30 @@ class Button:
         if self.func:
             self.func()
         else:
-            entry.configure(state='normal')
             entry.insert('end', self.text)
-            entry.configure(state='readonly')
 
-def entryEdit(func):
-    def wrapper(*args):
-        entryPast.configure(state='normal')
-        entry.configure(state='normal')
-        func(*args)
-        entry.configure(state='readonly')
-        entryPast.configure(state='readonly')
-    return wrapper
 
 @entryEdit
 def equal():
     global ans, newEq
     newEq = True
-
     expression = entry.get()
     expression = expression.replace('Ans', str(ans))
+    
     entryPast.delete(0, 'end')
     entryPast.insert(0, expression)
     entry.delete(0, 'end')
 
     expression = expression.replace('**', 'uzSomDalDoKodu^tak**tamNebudu')
     expression = expression.replace('^', '**')
-
-    expression = root(expression)        
+    expression = root(expression) # odmocnina, vyrobena funkcia -> ± chaos
 
     try:
-        c = eval(expression)
+        c = eval(expression) #cela matika okrem odmocniny
 
         if isinstance(c, float) and c.is_integer():
             c = int(c)
-        ans = c
+        ans = c # ans memory sa nastavi
 
         if not isinstance(c, int | float):
             return clear()
@@ -84,6 +82,7 @@ def equal():
         
     entry.insert(0, str(c))
 
+
 # BLACKMAGIC NESNAZIT SA POCHOPIT!!!!
 def root(strToRoot):
     if '√' not in strToRoot:
@@ -91,6 +90,7 @@ def root(strToRoot):
 
     for i, item in enumerate(strToRoot[::-1]):
         if item != '√': continue
+        
         i = len(strToRoot) - i-1
 
         for j, left in enumerate(strToRoot[i if i==0 else i-1::-1]): # ide od odmocniny dolava
@@ -149,12 +149,14 @@ def delete():
         last = entry.index('end') - 1
     entry.delete(last, 'end')
 
+
 @entryEdit
 def clear(event=None):
     if event: return
     if entry.get() == '':
         entryPast.delete(0, 'end')    
     entry.delete(0, 'end')    
+
 
 def resize(event):
     window.grid_columnconfigure('all', weight=1)
@@ -171,7 +173,6 @@ def resize(event):
     entryPast.configure(font=('Consolas', txtSize))
 
 
-
 window = tkinter.Tk()
 window.title('Kalkulacka')
 window.configure(bg='#111111')
@@ -181,36 +182,36 @@ entryPast = tkinter.Entry(justify='right', state='readonly')
 entryPast.configure(fg='grey', bg='green', relief='flat')
 entryPast.grid(column=0, row=0, columnspan=4, sticky='WENS')
 
-entry = tkinter.Entry(justify='right', state='readonly', fg='#111111', bg='green')
+entry = tkinter.Entry(justify='right', state='readonly', fg='#ffffff', bg='#111111')
 entry.grid(column=0, row=1, columnspan=4, sticky='WENS')
 entry.bind_all('<Control-c>', clear) # ken nahodou niekto kopiruje aby sa nezmzal vysledok
 
 ans = 'esteNieJe'
 newEq = False
 
-b9 = Button('9', 2, 4)
-b8 = Button('8', 1, 4)
-b7 = Button('7', 0, 4)
-b6 = Button('6', 2, 5)
-b5 = Button('5', 1, 5)
-b4 = Button('4', 0, 5)
-b3 = Button('3', 2, 6)
-b2 = Button('2', 1, 6)
-b1 = Button('1', 0, 6)
 b0 = Button('0', 0, 7)
-bPoint = Button('.', 1, 7)
-bEqual = Button('=', 3, 7, func=equal)
-bPlus = Button('+', 3, 6)
-bMinus = Button('-', 3, 5, key='minus')
-bMultiply = Button('*', 3, 4)
-bDivide = Button('/', 3, 3)
-bPow = Button('^', 0, 3, key='p')
-bSqrt = Button('√', 1, 3, key='s')
-bClear = Button('C', 2, 2, key='c', func=clear)
-bDelete = Button('⌫', 3, 2, key='BackSpace', func=delete)
-bAns = Button('Ans', 2, 7, key='a')
+b1 = Button('1', 0, 6)
+b2 = Button('2', 1, 6)
+b3 = Button('3', 2, 6)
+b4 = Button('4', 0, 5)
+b5 = Button('5', 1, 5)
+b6 = Button('6', 2, 5)
+b7 = Button('7', 0, 4)
+b8 = Button('8', 1, 4)
+b9 = Button('9', 2, 4)
 bBracketL = Button('(', 0, 2)
 bBracketR = Button(')', 1, 2)
-bBracketR = Button('%', 2, 3)
+bClear = Button('C', 2, 2, key='c', func=clear)
+bDelete = Button('⌫', 3, 2, key='BackSpace', func=delete)
+bPowr = Button('^', 0, 3, key='p')
+bNtroot = Button('√', 1, 3, key='s')
+bModulo = Button('%', 2, 3)
+bDivide = Button('/', 3, 3)
+bMultiply = Button('*', 3, 4)
+bMinus = Button('-', 3, 5, key='minus')
+bPlus = Button('+', 3, 6)
+bPoint = Button('.', 1, 7)
+bAns = Button('Ans', 2, 7, key='a')
+bEqual = Button('=', 3, 7, func=equal)
 
 tkinter.mainloop()

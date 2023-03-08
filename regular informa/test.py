@@ -1,1 +1,1 @@
-print(''.join([i for i in 'abcdef']))
+print(float(str(1.3-1)[:17]))
