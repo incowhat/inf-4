@@ -90,7 +90,7 @@ def equal():
         newEq = 'error'
 
 
-# BLACKMAGIC NESNAZIT SA POCHOPIT!!!!
+# BLACKMAGIC CHAOS NESNAZIT SA POCHOPIT!!!!
 # hodi error pri neparnej odmocnine zo zaporneho cisla
 def root(exp):
     if '√' not in exp:
@@ -234,7 +234,7 @@ Button(')', 1, 2)
 Button('C', 2, 2, key='c', func=clear)
 Button('⌫', 3, 2, key='BackSpace', func=delete)
 Button('^', 0, 3, key='p')
-Button('√', 1, 3, key='s')
+Button('√', 1, 3, key='r')
 Button('%', 2, 3)
 Button('/', 3, 3)
 Button('*', 3, 4)
