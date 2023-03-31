@@ -9,8 +9,7 @@ for line in lines:
 
 najviac = [[]]
 for pc in pocitace:
-    pc = [pc, *
-          pocitace[pc]]
+    pc = [pc, *pocitace[pc]]
 
     if len(najviac[0]) < len(pc):
         najviac = []
@@ -18,4 +17,6 @@ for pc in pocitace:
         continue
     najviac.append(pc)
 
-print(najviac)
+for pc in najviac:
+    print(f'Najviac virusov ({len(pc[1:])}) mal {pc[0]}')
+    print(', '.join(pc[1:]))
