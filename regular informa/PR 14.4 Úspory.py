@@ -23,14 +23,13 @@ def hladaj():
 def vypis():
     with open(subor, 'r') as file:
         for i, line in enumerate(file.readlines(), 1):
-            print(f'{i:3}. mesiac {int(line):3} eur')
+            print(f'{i:2}. mesiac {int(line):3} eur')
             
 
 label = tkinter.Label(text='Hodnota')
 label.grid(column=0, row=0)
 entry = tkinter.Entry(width=10)
 entry.grid(column=1, row=0)
-
 b1 = tkinter.Button(text='Hladaj hodnotu', command=hladaj, width=20)
 b1.grid(column=0, row=1, columnspan=2)
 b2 = tkinter.Button(text='Vypis uctu', command=vypis, width=20)

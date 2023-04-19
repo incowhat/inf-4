@@ -1,0 +1,12 @@
+25.1.2019 pc1 BlackFriday
+25.1.2019 pc3 Trojan.Autolt
+30.1.2019 pc2 BlackFriday
+18.1.2019 pc3 AdwareZAS
+05.3.2019 pc4 BlackFriday
+05.3.2019 pc3 BlackFriday
+27.3.2019 pc3 AdwareZAS
+27.3.2019 pc2 ILoveYou
+30.4.2019 pc2 Win32Worm
+01.5.2019 pc4 ILoveYou
+10.5.2019 pc0 Win32Worm
+08.5.2019 pc1 Trojan.Autolt

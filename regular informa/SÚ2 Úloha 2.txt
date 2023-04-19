@@ -1,0 +1,25 @@
+ISP Internet Service Provider
+LAN Local Area Network
+ARPA Advanced Research Projects Agency 
+WLAN Wireless Local Area Network
+MAN Metropolitan Area Network
+WAN Wide Area Network
+IP Internet Prorocol
+TCP Transmission Control Protocol
+UDP User Datagram Protocol
+URL Uniform Resource Locator
+FTP File Transport Protocol
+HTTP HyperText Transfer Protocol
+HTTPS HyperText Transfer Protocol Secure
+RS Router Solicitate
+NS Neighbour Solicitate
+SMTP Simple Mail Transfer Protocol
+POP3 Post Office Protocol version 3
+IMAP Internet Message Protocol
+NIC Network Interface Card
+DNS Domain Name System
+DHCP Dynamic Host Configuration Protocol
+RIP Routing Information Protocol
+NAT Network Address Translation
+MAC Media Access Control
+ARP Address Resolution Protocol
