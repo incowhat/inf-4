@@ -1,23 +1,15 @@
-def zistiKelo(bankovka, suma):
-    pocet = suma//bankovka
-    suma %= bankovka
+def zistiKelo(suma):
+    print(f'Suma {suma}€ sa da vyskladat z tychto eurobankoviek a eurominci:')
 
-    if pocet != 0:
-        print(('bankovky' if bankovka >= 5 else 'mince   '), f'{bankovka:>3}€: {pocet:>3} ks.')
+    for hodnota in (500, 200, 100, 50, 20, 10, 5, 2, 1):
+        pocet = suma//hodnota
+        suma %= hodnota
+
+        if pocet != 0:
+            print(('bankovky' if hodnota >= 5 else 'mince   '), f'{hodnota:>3}€: {pocet:>3} ks.')
+        
+        if suma == 0:
+            return
     
-    if suma == 0:
-        return
 
-    match bankovka:
-        case 500: zistiKelo(200, suma)
-        case 200: zistiKelo(100, suma)
-        case 100: zistiKelo(50, suma)
-        case 50: zistiKelo(20, suma)
-        case 20: zistiKelo(10, suma)
-        case 10: zistiKelo(5, suma)
-        case 5: zistiKelo(2, suma)
-        case _: zistiKelo(1, suma)
-
-suma = int(input('zadaj sumu: '))
-print(f'Suma {suma}€ sa da vyskladat z tychto eurobankoviek a eurominci:')
-zistiKelo(500, suma)
+zistiKelo(int(input('zadaj sumu: ')))
