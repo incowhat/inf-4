@@ -170,7 +170,8 @@ def delete():
 
 @entryEdit
 def clear(event=None):
-    if event: return
+    if event:
+        return
     if entry.get() == '':
         entryPast.delete(0, 'end')
     entry.delete(0, 'end')
