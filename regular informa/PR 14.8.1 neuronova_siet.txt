@@ -1,3 +1,14 @@
 Neurónová sieť je výpočtový model, zostavený na základe abstrakcie vlastností biologických nervových systémov. Základnou časťou neurónovej siete je model neurónu s N vstupmi a M výstupmi, ktorý spracúva informáciu podľa nasledovného pravidla.
 Základnou vlastnosťou neurónových sietí je schopnosť abstrakcie pravidiel. Ide o pravidlá medzi vstupnými a výstupnými hodnotami prezentovanými vo vhodnej forme a následnou aplikáciou získaných pravidiel na akékoľvek vstupné hodnoty. Neurónové siete sa využívajú v regulačnej a simulačnej technike.
 Proces abstrakcie sa nazýva učenie. Môže prebiehať s učiteľom alebo bez učiteľa. Počas tohto procesu sa aktualizujú hodnoty váhových spojení. V literatúre je popísaných niekoľko učiacich algoritmov. Po ukončení učenia, sa už hodnoty váh nemenia a sieť produkuje výstupy podľa uvedeného pravidla aplikovaného na vstupné hodnoty.
+
+(01) Neurónová sieť je výpočtový model, zostavený na základe abstrakcie vlastností biologických nervových systémov
+(02) Základnou časťou neurónovej siete je model neurónu s N vstupmi a M výstupmi, ktorý spracúva informáciu podľa nasledovného pravidla
+(03) Základnou vlastnosťou neurónových sietí je schopnosť abstrakcie pravidiel
+(04) Ide o pravidlá medzi vstupnými a výstupnými hodnotami prezentovanými vo vhodnej forme a následnou aplikáciou získaných pravidiel na akékoľvek vstupné hodnoty
+(05) Neurónové siete sa využívajú v regulačnej a simulačnej technike
+(06) Proces abstrakcie sa nazýva učenie
+(07) Môže prebiehať s učiteľom alebo bez učiteľa
+(08) Počas tohto procesu sa aktualizujú hodnoty váhových spojení
+(09) V literatúre je popísaných niekoľko učiacich algoritmov
+(10) Po ukončení učenia, sa už hodnoty váh nemenia a sieť produkuje výstupy podľa uvedeného pravidla aplikovaného na vstupné hodnoty.
