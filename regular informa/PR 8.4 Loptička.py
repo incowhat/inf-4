@@ -21,13 +21,12 @@ def move(x, y):
     while True:
         cv.move('ball', x, y)
         cv.itemconfigure('ball', fill=next(color))
-        cv.after(1)
+        cv.after(2)
         cv.update()
 
         bc = cv.coords('ball')
         if bc[0] <= 0 or bc[1] <= 0 or bc[2] >= 400 or bc[3] >= 400:
             x, y = -x, -y
-
 
 
 bHore = tk.Button(text='Hore', width=8, command=lambda: move(0, -1))

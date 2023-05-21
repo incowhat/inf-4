@@ -1,12 +1,17 @@
-def color_generator(step=1.0):
-    import colorsys
+import tkinter
 
-    while True:
-        for i in range(int(1528/step)):
-            hue = i / int(1528/step)
-            r, g, b = colorsys.hsv_to_rgb(hue, 1, 1)
-            yield f'#{int(r*255):02x}{int(g*255):02x}{int(b*255):02x}'
+def funkcia():
+    print('Nemaj stres Aji!!!!')
+    ajka.configure(text='Okej, budem sa snazit')
 
-color = color_generator()
-while True:
-    print(next(color_generator()))
+    text = entry.get()
+    print(text)
+    entry.delete(0, 'end')
+
+ajka = tkinter.Button(text='Neviem nic a mam stres', padx=8, pady=12, bg='#ff00ff', activebackground='#ab00ba', fg='gold', command=funkcia)
+ajka.pack(padx=100, pady=30)
+
+entry = tkinter.Entry()
+entry.pack()
+
+tkinter.mainloop()
